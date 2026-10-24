@@ -125,7 +125,7 @@ void setup() {
     Serial.begin(115200);
 
     // 一覧は画面に直接描くので、アバターを出す前に接続する。
-    const bool connected = wifi_select::connect();
+    const auto wifi = wifi_select::connect();
 
     avatar.init();
     avatar.setSpeechFont(&fonts::efontJA_12);
@@ -136,14 +136,13 @@ void setup() {
         Serial.println("failed to allocate recording buffer");
     }
 
-    if (connected) {
+    if (wifi == wifi_select::Result::Connected) {
         Serial.printf("Wi-Fi connected: %s\n", WiFi.localIP().toString().c_str());
         avatar.setExpression(Expression::Happy);
         set_speech("つながったよ");
     } else {
-        Serial.println("Wi-Fi connection failed");
-        avatar.setExpression(Expression::Sad);
-        set_speech("Wi-Fiにつながらない");
+        avatar.setExpression(Expression::Neutral);
+        set_speech("オフラインだよ");
     }
 }
 
