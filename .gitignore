@@ -1,0 +1,4 @@
+.pio/
+.vscode/
+# Wi-Fi・APIトークンを含むため管理しない
+include/secrets.h
